@@ -1,8 +1,0 @@
-sentiment/__init__.py
-sentiment/config.py
-sentiment/security.py
-sentiment.egg-info/PKG-INFO
-sentiment.egg-info/SOURCES.txt
-sentiment.egg-info/dependency_links.txt
-sentiment.egg-info/requires.txt
-sentiment.egg-info/top_level.txt

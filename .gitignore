@@ -1,6 +1,7 @@
 venv/
 build/
 dist/
+cache/
 __pycache__/
 
 config.py
