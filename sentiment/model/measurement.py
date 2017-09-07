@@ -1,5 +1,4 @@
 from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy.orm import validates
 
 from . import db
 
@@ -14,10 +13,12 @@ class Measurement(db.Model):
     scale_id = db.Column(db.Integer, db.ForeignKey('scale.id'), nullable=False)
     scale = db.relationship('Scale', back_populates='measurements')
 
-    def __init__(self, scale=None, value=None, entry=None):
-        self.scale = scale  # Make sure to set scale before value
-        self.value = value
-        self.entry = entry
+    def __init__(self, *args, **kwargs):
+        if 'scale' in kwargs:
+            # Make sure scale is set first
+            self.scale = kwargs.pop('scale')
+
+        super().__init__(*args, **kwargs)
 
     @hybrid_property
     def value(self):
