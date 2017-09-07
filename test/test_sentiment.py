@@ -61,12 +61,12 @@ def test_entry(db, models, user):
     assert user is e.user
 
     s = models.Scale(name="scale")
-    m = models.Measurement(scale=s)
-    m.value = 3
+    m = models.Measurement(scale=s, value=3)
 
-    e.measurements.append(m)
+    m.entry = e
     assert m in e.measurements
     assert e is m.entry
+
 
 
 def test_measurement(db, models, entry):
@@ -86,7 +86,6 @@ def test_measurement(db, models, entry):
 
 
 def test_scale_limits(db, models):
-    pass
     s = models.Scale(name="scale", upper_limit=10)
     m = models.Measurement(scale=s, value=0)
     with pytest.raises(AssertionError):
@@ -107,3 +106,26 @@ def test_scale_limits(db, models):
         m.value = 10
     m.value = -5
     m.value = 5
+
+
+def test_tag(db, models, entry):
+    ts = models.Tagset(name="food")
+    t1 = models.Tag(name="pizza", tagset=ts)
+    t2 = models.Tag(name="pizza", tagset=ts)
+
+    db.session.add(ts)
+    db.session.commit()
+
+    t1.name = "pizza"
+    t1.name = "noodles"
+
+    assert t1 in ts.tags
+    assert ts is t1.tagset
+    assert t1 is models.Tag.query.first()
+    assert ts is models.Tagset.query.first()
+
+    entry.tags.append(t1)
+    entry.tags.append(t2)
+
+    assert t1 in entry.tags
+    assert entry in t1.entries
