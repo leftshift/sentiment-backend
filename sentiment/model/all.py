@@ -6,4 +6,5 @@ from .measurement import Measurement
 from .scale import Scale
 from .tag import Tag
 from .tagset import Tagset
-from .achievement import Achivement
+from .achievement import Achievement
+from .check import Check

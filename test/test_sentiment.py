@@ -7,7 +7,7 @@ from sentiment.factory import create_app
 
 
 @pytest.fixture
-def app(request):
+def app():
     _, temp_db_location = tempfile.mkstemp()
     config = {
         'SQLALCHEMY_DATABASE_URI': "sqlite:///" + temp_db_location,
@@ -129,3 +129,15 @@ def test_tag(db, models, entry):
 
     assert t1 in entry.tags
     assert entry in t1.entries
+
+
+def test_achievement(db, models, entry):
+    a = models.Achievement(name="smoke")
+    c = models.Check(achievement=a, entry=entry, value=True)
+
+    db.session.add(a)
+    db.session.add(c)
+
+    assert c.value is True
+    assert c.achievement is a
+    assert c in a.checks

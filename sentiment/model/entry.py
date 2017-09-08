@@ -11,7 +11,7 @@ class Entry(db.Model):
     user = db.relationship('User', back_populates="entries")
 
     measurements = db.relationship('Measurement', back_populates='entry')
-    achivements = db.relationship('Achivement', back_populates='entry')
+    checks = db.relationship('Check', back_populates='entry')
     tags = db.relationship(
         'Tag',
         secondary='entry_tag',

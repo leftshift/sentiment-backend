@@ -1,9 +1,8 @@
 from . import db
 
 
-class Achivement(db.Model):
+class Achievement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    value = db.Column(db.Boolean, default=False)
+    name = db.Column(db.String(80), nullable=False)
 
-    entry_id = db.Column(db.Integer, db.ForeignKey('entry.id'), nullable=False)
-    entry = db.relationship('Entry', back_populates='achivements')
+    checks = db.relationship('Check', back_populates='achievement')
