@@ -12,7 +12,7 @@ setup(
         'passlib',
         'bcrypt'
     ],
-    test_requires=[
+    tests_require=[
         'pytest'
     ]
 )
